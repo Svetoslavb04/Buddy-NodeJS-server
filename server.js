@@ -9,6 +9,23 @@ const port = process.env.PORT
 
 app.use(require('cors')())
 
+const { connectDatabase } = require('./src/config/initDatabase');
+
+connectDatabase
+    .then(() => {
+
+        console.log('Database connection established.');
+
+        app.listen(port, () => {
+            console.log(`Server is listening on port: ${port}`);
+        })
+
+    })
+    .catch((err) => {
+        console.log('Failed to connect to database:');
+        console.log(err);
+    })
+
 app.get('/token', async (req, res) => {
 
     try {
@@ -132,8 +149,4 @@ app.get('/accounts', async (req, res) => {
         res.status(401).json(error.response.data)
     }
 
-})
-
-app.listen(port, () => {
-    console.log(`Server is listening on port: ${port}`);
 })
