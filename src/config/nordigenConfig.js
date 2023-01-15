@@ -1,0 +1,1 @@
+exports.baseURL = 'https://ob.nordigen.com/api/v2'
