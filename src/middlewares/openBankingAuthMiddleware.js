@@ -7,8 +7,8 @@ exports.getNordigenAccessToken = () => {
     return accessToken
 }
 
-exports.ServerAuthorized = async (req, res) => {
-
+exports.ServerAuthorized = async (req, res, next) => {
+    
     if (!refreshToken) {
         try {
             const { access, refresh, access_expires, refresh_expires } = await getNewToken()
@@ -21,7 +21,7 @@ exports.ServerAuthorized = async (req, res) => {
 
             req.accessToken = access;
 
-            return req.next();
+            return next()
 
         } catch (error) {
             return res.json(error.message)
@@ -38,11 +38,12 @@ exports.ServerAuthorized = async (req, res) => {
             
             req.accessToken = access;
 
-            return req.next()
+            return next()
 
         } catch (error) {
             return res.json(error.message)
         }
     }
 
+    next()
 }
