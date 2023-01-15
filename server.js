@@ -9,6 +9,8 @@ const port = process.env.PORT
 
 app.use(require('cors')())
 
+app.use(require('./src/router'));
+
 const { connectDatabase } = require('./src/config/initDatabase');
 
 connectDatabase
