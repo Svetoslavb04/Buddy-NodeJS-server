@@ -51,7 +51,7 @@ router.get('/accounts', async (req, res) => {
         const accounts = await getAccountsId(req.session.user._id);
 
         const fullAccountsInformation = await getFullAccountsInformation(accounts)
-        console.log(accounts);
+        
         res.json([...fullAccountsInformation]);
     } catch (error) {
         res.json([])
