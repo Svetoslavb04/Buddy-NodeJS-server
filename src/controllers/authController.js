@@ -4,6 +4,8 @@ const isAuthenticated = require('../middlewares/isAuthenticated')
 
 const { register, login } = require('../services/authService')
 
+router.get('/me', async (req, res) => { res.json(req.session.user) })
+
 router.post('/login', async (req, res) => {
 
     const { email, password } = req.body;
@@ -57,6 +59,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/logout', isAuthenticated, (req, res) => {
 
+    console.log(req.session);
     req.session.user = null
 
     res.json({ message: 'Logged out' })

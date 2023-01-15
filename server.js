@@ -8,7 +8,10 @@ require('dotenv').config();
 
 const port = process.env.PORT
 
-app.use(require('cors')())
+app.use(require('cors')({
+    origin: [process.env.ORIGIN],
+    credentials: true
+}))
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
