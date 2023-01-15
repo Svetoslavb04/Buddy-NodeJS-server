@@ -184,7 +184,7 @@ exports.getFullAccountsInformation = async (accounts) => {
             )
 
             const accountDetails = detailsResponse.data.account;
-            
+
             const balancesResponse = await axios.get(
                 `${baseURL}/accounts/${account}/balances/`,
                 {
@@ -209,6 +209,18 @@ exports.getFullAccountsInformation = async (accounts) => {
 
             accountDetails.institution_id = accountResponse.data.institution_id;
 
+            const institutionResponse = await axios.get(
+                `${baseURL}/institutions/${accountResponse.data.institution_id}/`,
+                {
+                    headers: {
+                        'accept': 'application/json',
+                        'Authorization': `Bearer ${openBanking.getNordigenAccessToken()}`
+                    }
+                }
+            )
+
+            accountDetails.institution_name = institutionResponse.data.name;
+            
             fullAccountsInformation.push(accountDetails);
         }
 
