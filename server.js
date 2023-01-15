@@ -3,8 +3,6 @@ const app = express();
 
 require('dotenv').config();
 
-// const axios = require('axios').default;
-
 const port = process.env.PORT
 
 app.use(require('cors')())
@@ -19,7 +17,7 @@ const run = async () => {
 
         await connectDatabase()
         console.log('Database connection established.');
-        
+
         app.listen(port, () => {
             console.log(`Server is listening on port: ${port}`);
         })
