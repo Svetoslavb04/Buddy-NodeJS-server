@@ -1,6 +1,7 @@
 const axios = require('axios').default;
 
 const { baseURL } = require('../config/nordigenConfig');
+const openBanking = require('../middlewares/openBankingAuthMiddleware');
 
 exports.getNewToken = async () => {
     try {
@@ -31,7 +32,7 @@ exports.getNewToken = async () => {
 }
 
 exports.refreshAccessToken = async (refreshToken) => {
-    
+
     try {
         const response = await axios.post(
             `${baseURL}/token/refresh/`,
@@ -45,7 +46,7 @@ exports.refreshAccessToken = async (refreshToken) => {
                 }
             }
         )
-        
+
         return {
             access: response.data.access,
             access_expires: response.data.access_expires
@@ -53,5 +54,27 @@ exports.refreshAccessToken = async (refreshToken) => {
 
     } catch (error) {
         throw new Error('Unauthorized access to the Open Banking Provider.')
+    }
+}
+
+exports.getInstitutionsByCountry = async (countryCode) => {
+
+    try {
+
+        const response = await axios.post(
+            `${baseURL}/institutions?country=${countryCode}`,
+            null,
+            {
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${openBanking.getNordigenAccessToken()}`
+                }
+            }
+        )
+        
+        return response.data
+
+    } catch (error) {
+        throw error.response.data
     }
 }

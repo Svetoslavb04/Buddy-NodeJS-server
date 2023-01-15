@@ -8,7 +8,7 @@ exports.getNordigenAccessToken = () => {
 }
 
 exports.ServerAuthorized = async (req, res, next) => {
-    console.log(accessToken);
+    
     if (!refreshToken) {
         try {
             const { access, refresh, access_expires, refresh_expires } = await getNewToken()

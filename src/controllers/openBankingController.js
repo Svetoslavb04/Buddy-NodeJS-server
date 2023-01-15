@@ -1,14 +1,24 @@
 const router = require('express').Router();
 
-const { ServerAuthorized, getNordigenAccessToken } = require('../middlewares/openBankingAuthMiddleware');
+const { ServerAuthorized } = require('../middlewares/openBankingAuthMiddleware');
+const { getInstitutionsByCountry } = require('../services/openBankingService');
 
 router.use(ServerAuthorized);
 
-router.get('/countries', (req, res) => {
+router.get('/institutions', async (req, res) => {
     
-    const accessToken = getNordigenAccessToken();
+    const { country } = req.query;
 
-    res.json(accessToken)
+    if (!country) { return res.json([]) }
+    
+    try {
+
+        const institutions = await getInstitutionsByCountry(country.toLowerCase());
+        
+        res.json(institutions)
+    } catch (error) {
+        res.status(400).json(error)
+    }
 })
 
 module.exports = router;
