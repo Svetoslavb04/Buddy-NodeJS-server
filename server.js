@@ -1,4 +1,7 @@
 const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 const app = express();
 
 require('dotenv').config();
@@ -6,6 +9,13 @@ require('dotenv').config();
 const port = process.env.PORT
 
 app.use(require('cors')())
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION_STRING, dbName: 'Budggy' })
+}))
 
 app.use(require('./src/router'));
 
