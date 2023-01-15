@@ -17,6 +17,9 @@ app.use(session({
     store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION_STRING, dbName: 'Budggy' })
 }))
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 app.use(require('./src/router'));
 
 const { connectDatabase } = require('./src/config/initDatabase');
