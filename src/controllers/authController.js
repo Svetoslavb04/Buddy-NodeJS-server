@@ -4,7 +4,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated')
 
 const { register, login } = require('../services/authService')
 
-router.get('/me', async (req, res) => { res.json(req.session.user) })
+router.get('/me', async (req, res) => { res.json(req.session.user || { _id: null }) })
 
 router.post('/login', async (req, res) => {
 
