@@ -17,6 +17,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     cookie: {
+        httpOnly: true,
         sameSite: 'none',
         secure: process.env.ENVIRONMENT === 'production' ? true : false
     },
