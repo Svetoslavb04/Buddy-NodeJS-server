@@ -19,7 +19,6 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: process.env.ENVIRONMENT !== 'development',
-        sameSite: 'none',
     },
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION_STRING, dbName: 'Budggy' })
