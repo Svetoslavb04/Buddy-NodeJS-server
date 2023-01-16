@@ -9,7 +9,7 @@ require('dotenv').config();
 const port = process.env.PORT || 3000
 
 app.use(require('cors')({
-    origin: [process.env.ORIGIN],
+    origin: process.env.ORIGIN,
     credentials: true
 }))
 
@@ -19,7 +19,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: process.env.ENVIRONMENT !== 'development',
-        sameSite: process.env.ENVIRONMENT === 'production' ? 'none' : false,
+        sameSite: 'none',
     },
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION_STRING, dbName: 'Budggy' })
