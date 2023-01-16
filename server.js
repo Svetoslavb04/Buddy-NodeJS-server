@@ -16,6 +16,9 @@ app.use(require('cors')({
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
+    cookie: {
+        secure: process.env.ENVIRONMENT === 'production' ? true : false
+    },
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.DB_CONNECTION_STRING, dbName: 'Budggy' })
 }))
